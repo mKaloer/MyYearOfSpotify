@@ -100,14 +100,14 @@ def train_tracks(datadir):
     model = Word2Vec(sentences=GeneratorIterator(create_iterator_rand(datadir, 'track_uri', ['track_name', 'artist_uri'])), vector_size=128,
                      window=5, min_count=5, workers=8, callbacks=[callback()], compute_loss=True, epochs=10)
 
-    model.save("track2vec.model")
+    model.save("vectormodels/track2vec.model")
 
 
 def train_artists(datadir):
     model = Word2Vec(sentences=GeneratorIterator(create_iterator_rand(datadir, 'artist_uri', ['artist_uri'])), vector_size=128,
                      window=5, min_count=5, workers=8, callbacks=[callback()], compute_loss=True, epochs=10)
 
-    model.save("artist2vec.model")
+    model.save("vectormodels/artist2vec.model")
 
 
 def eval(model_path):
@@ -163,14 +163,14 @@ def plot_weights(model_path):
     fig.show()
     fig.write_html('plot2.html')
 
-
-if sys.argv[1] == 'tracks':
-    train_tracks(sys.argv[2])
-elif sys.argv[1] == 'artists':
-    train_artists(sys.argv[2])
-elif sys.argv[1] == 'eval':
-    eval(sys.argv[2])
-elif sys.argv[1] == 'plot':
-    plot_weights(sys.argv[2])
-else:
-    print("Unknown type: " + sys.argv[1])
+if __name__ == '__main__':
+    if sys.argv[1] == 'tracks':
+        train_tracks(sys.argv[2])
+    elif sys.argv[1] == 'artists':
+        train_artists(sys.argv[2])
+    elif sys.argv[1] == 'eval':
+        eval(sys.argv[2])
+    elif sys.argv[1] == 'plot':
+        plot_weights(sys.argv[2])
+    else:
+        print("Unknown type: " + sys.argv[1])
